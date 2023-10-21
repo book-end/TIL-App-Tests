@@ -14,6 +14,21 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class CategoryAssertions{
     @Test
+    public void TotalCategoryCount() {
+        System.setProperty("webdriver.chrome.driver", "D:\\Downloads\\chromedriver-win32\\chromedriver-win32\\chromedriver.exe");
+
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+
+        driver.get("https://til-jade.vercel.app/");
+
+        int expectedCount = 8;
+        int actualCount = driver.findElements(By.cssSelector("button.btn-category")).size();
+
+        Assert.assertEquals(expectedCount, actualCount);
+    }
+
+    @Test
     public void AllCategoryNumberOfFacts() {
         System.setProperty("webdriver.chrome.driver", "D:\\Downloads\\chromedriver-win32\\chromedriver-win32\\chromedriver.exe");
 
