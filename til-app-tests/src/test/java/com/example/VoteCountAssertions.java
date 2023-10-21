@@ -16,29 +16,77 @@ public class VoteCountAssertions {
 
     @Test
     public void InterestingVoteCount() {
-        System.setProperty("webdriver.chrome.driver", "D:\\Downloads\\chromedriver-win32\\chromedriver-win32\\chromedriver.exe");
+         System.setProperty("webdriver.chrome.driver", "D:\\Downloads\\chromedriver-win32\\chromedriver-win32\\chromedriver.exe");
 
         WebDriver driver = new ChromeDriver();
 
         driver.manage().window().maximize();
         driver.get("https://til-jade.vercel.app/");
+
+        // find a fact to vote on
+        driver.findElement(By.xpath("//button[contains(text(), 'finance')]")).click();
         
         // wait until all facts display
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(".fact")));
 
+        String actualCount = driver.findElement(By.id("mindblowing-vote")).getText();
+        
+        driver.findElement(By.id("mindblowing-vote")).click();
+
+        String expectedCount = driver.findElement(By.id("mindblowing-vote")).getText();
+
+        Assert.assertEquals(expectedCount, actualCount);      
+    }
+
+    @Test
+    public void MindblowingVoteCount() {
+         System.setProperty("webdriver.chrome.driver", "D:\\Downloads\\chromedriver-win32\\chromedriver-win32\\chromedriver.exe");
+
+        WebDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+        driver.get("https://til-jade.vercel.app/");
+
         // find a fact to vote on
-        driver.findElement(By.xpath("//button[contains(text(), 'finance')]"));
+        driver.findElement(By.xpath("//button[contains(text(), 'finance')]")).click();
+        
+        // wait until all facts display
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(".fact")));
 
-        // click on vote button for the same fact
-        driver.findElement(By.id("interesting-vote")).click();
+        String actualCount = driver.findElement(By.id("mindblowing-vote")).getText();
 
-        // find vote count
-        String expectedCount = "👍 1";
+        // click on vote button for the same fact and get count
+        driver.findElement(By.id("mindblowing-vote")).click();
 
-        WebElement element = driver.findElement(By.xpath("//button[text()='1']"));
-        String actualCount = element.getText();
+        String expectedCount = driver.findElement(By.id("mindblowing-vote")).getText();
 
-        Assert.assertEquals(actualCount, expectedCount);
+        Assert.assertEquals(expectedCount, actualCount);       
+    }
+
+    @Test
+    public void FalseVoteCount() {
+         System.setProperty("webdriver.chrome.driver", "D:\\Downloads\\chromedriver-win32\\chromedriver-win32\\chromedriver.exe");
+
+        WebDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+        driver.get("https://til-jade.vercel.app/");
+
+        // find a fact to vote on
+        driver.findElement(By.xpath("//button[contains(text(), 'finance')]")).click();
+        
+        // wait until all facts display
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector(".fact")));
+
+        String actualCount = driver.findElement(By.id("false-vote")).getText();
+
+        driver.findElement(By.id("false-vote")).click();
+
+        String expectedCount = driver.findElement(By.id("false-vote")).getText();
+
+        Assert.assertEquals(expectedCount, actualCount);       
     }
 }
